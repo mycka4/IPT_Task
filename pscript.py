@@ -14,3 +14,12 @@ def send_request(pin):
         "Connection: close\r\n"
         f"{data}"
     )
+
+    with socket.socket() as sock:
+        sock.settimeout(5)
+        try:
+            sock.connect((HOST, PORT))
+            sock.sendall(request.encode())
+            return sock.recv(1024).decode(errors="ignore")
+        except socket.error:
+            return None
